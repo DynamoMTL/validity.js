@@ -6,7 +6,7 @@
   ],
   "homepagea": 'https://github.com/DynamoMTL/validity'
   "description": "Easy validation framework for JavaScript models",
-  "main": "src/validity.js",
+  "main": "src/validity.min.js",
   "keywords": [
     "model",
     "validation",
