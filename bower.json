@@ -4,7 +4,7 @@
   "authors": [
     "Josh Nussbaum <joshnuss@gmail.com>"
   ],
-  "homepagea": 'https://github.com/DynamoMTL/validity'
+  "homepage": "https://github.com/DynamoMTL/validity.git",
   "description": "Easy validation framework for JavaScript models",
   "main": "src/validity.min.js",
   "keywords": [
