@@ -166,7 +166,7 @@
         return expect(product.errors).toEqual([]);
       });
     });
-    return describe("lengthEquals", function() {
+    describe("lengthEquals", function() {
       var Product, product;
       Product = (function() {
         function Product() {}
@@ -192,6 +192,39 @@
       });
       return it("is valid when attribute provided", function() {
         product.name = '1234567890';
+        expect(product.isValid()).toBe(true);
+        expect(product.isInvalid()).toBe(false);
+        return expect(product.errors).toEqual([]);
+      });
+    });
+    return describe("custom validator", function() {
+      var Product, product;
+      Product = (function() {
+        function Product() {}
+
+        Validity.define(Product, {
+          name: 'isValidName'
+        });
+
+        Product.prototype.isValidName = function() {
+          if (this.name !== 'magic') {
+            return 'oops';
+          }
+        };
+
+        return Product;
+
+      })();
+      product = new Product;
+      it("errors when attribute missing", function() {
+        expect(product.isValid()).toBe(false);
+        expect(product.isInvalid()).toBe(true);
+        return expect(product.errors).toEqual({
+          name: ["oops"]
+        });
+      });
+      return it("is valid when attribute provided", function() {
+        product.name = 'magic';
         expect(product.isValid()).toBe(true);
         expect(product.isInvalid()).toBe(false);
         return expect(product.errors).toEqual([]);

@@ -138,3 +138,26 @@ describe "Validity", ->
       expect(product.isValid()).toBe(true)
       expect(product.isInvalid()).toBe(false)
       expect(product.errors).toEqual []
+
+  describe "custom validator", ->
+    class Product
+      Validity.define @,
+        name: 'isValidName'
+
+      isValidName: ->
+        'oops' unless @name == 'magic'
+
+    product = new Product
+
+    it "errors when attribute missing", ->
+      expect(product.isValid()).toBe(false)
+      expect(product.isInvalid()).toBe(true)
+      expect(product.errors).toEqual
+        name: ["oops"]
+
+    it "is valid when attribute provided", ->
+      product.name = 'magic'
+
+      expect(product.isValid()).toBe(true)
+      expect(product.isInvalid()).toBe(false)
+      expect(product.errors).toEqual []
