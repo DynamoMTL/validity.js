@@ -1,0 +1,23 @@
+{
+  "name": "validity",
+  "version": "0.0.0",
+  "authors": [
+    "Josh Nussbaum <joshnuss@gmail.com>"
+  ],
+  "homepagea": 'https://github.com/DynamoMTL/validity'
+  "description": "Easy validation framework for JavaScript models",
+  "main": "src/validity.js",
+  "keywords": [
+    "model",
+    "validation",
+    "validate"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
