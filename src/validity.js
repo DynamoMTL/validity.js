@@ -30,6 +30,11 @@
         if (String(object[attr]).length !== arg) {
           return "must have exactly " + arg + " characters";
         }
+      },
+      number: function(object, attr) {
+        if (typeof object[attr] !== 'number') {
+          return "must be a number";
+        }
       }
     },
     _normalizeRules: function(rules) {
@@ -84,7 +89,11 @@
             if (fn = Validity.RULES[name]) {
               error = fn(object, attr, arg);
             } else {
-              error = object[name](attr, arg);
+              fn = object[name];
+              if (!(fn && typeof fn === 'function')) {
+                throw "Validator " + name + " is not defined";
+              }
+              error = fn.apply(object, [attr, arg]);
             }
             if (error) {
               (_base = object.errors)[attr] || (_base[attr] = []);

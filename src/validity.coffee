@@ -18,6 +18,9 @@ window.Validity =
     lengthEquals: (object, attr, arg) ->
       "must have exactly #{arg} characters" if String(object[attr]).length != arg
 
+    number: (object, attr) ->
+      "must be a number" unless typeof(object[attr]) == 'number'
+
   _normalizeRules: (rules) ->
     self = this
     dict = {}
@@ -62,7 +65,11 @@ window.Validity =
           if fn = Validity.RULES[name]
             error = fn(object, attr, arg)
           else
-            error = object[name](attr, arg)
+            fn = object[name]
+
+            throw "Validator #{name} is not defined" unless fn && typeof(fn) == 'function'
+
+            error = fn.apply(object, [attr, arg])
 
           if error
             object.errors[attr] ||= []

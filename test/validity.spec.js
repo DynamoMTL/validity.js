@@ -42,6 +42,34 @@
         return expect(address.errors).toEqual([]);
       });
     });
+    describe("number", function() {
+      var Person, person;
+      Person = (function() {
+        function Person() {}
+
+        Validity.define(Person, {
+          age: 'number'
+        });
+
+        return Person;
+
+      })();
+      person = new Person;
+      it("errors when attribute missing", function() {
+        person.age = 'thirty';
+        expect(person.isValid()).toBe(false);
+        expect(person.isInvalid()).toBe(true);
+        return expect(person.errors).toEqual({
+          age: ["must be a number"]
+        });
+      });
+      return it("is valid when attribute provided", function() {
+        person.age = 30;
+        expect(person.isValid()).toBe(true);
+        expect(person.isInvalid()).toBe(false);
+        return expect(person.errors).toEqual([]);
+      });
+    });
     describe("greaterThan", function() {
       var Product, product;
       Product = (function() {

@@ -41,6 +41,7 @@ bower install validity
 ## Supported Validations
 
 - required
+- number
 - greater than
 - greater than or equal
 - less than
@@ -50,8 +51,6 @@ bower install validity
 
 ### Upcoming
 
-- number
-- string
 - boolean
 - between
 - inclusion

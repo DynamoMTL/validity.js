@@ -29,6 +29,28 @@ describe "Validity", ->
       expect(address.isInvalid()).toBe(false)
       expect(address.errors).toEqual []
 
+  describe "number", ->
+    class Person
+      Validity.define @,
+        age: 'number'
+
+    person = new Person
+
+    it "errors when attribute missing", ->
+      person.age = 'thirty'
+
+      expect(person.isValid()).toBe(false)
+      expect(person.isInvalid()).toBe(true)
+      expect(person.errors).toEqual
+        age: ["must be a number"]
+
+    it "is valid when attribute provided", ->
+      person.age = 30
+
+      expect(person.isValid()).toBe(true)
+      expect(person.isInvalid()).toBe(false)
+      expect(person.errors).toEqual []
+
   describe "greaterThan", ->
     class Product
       Validity.define @,
