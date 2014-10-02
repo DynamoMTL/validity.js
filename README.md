@@ -34,7 +34,9 @@ person.errors #= {}
 
 ## Installation
 
-`bower install validity`
+```
+bower install validity
+```
 
 ## Supported Validations
 
@@ -49,4 +51,9 @@ person.errors #= {}
 ### Upcoming
 
 - number
+- string
+- boolean
+- between
+- inclusion
+- exclusion
 - regex
