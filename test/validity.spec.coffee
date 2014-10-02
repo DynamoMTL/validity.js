@@ -75,6 +75,50 @@ describe "Validity", ->
       expect(product.isInvalid()).toBe(false)
       expect(product.errors).toEqual []
 
+  describe "greaterThanOrEqual", ->
+    class Product
+      Validity.define @,
+        price: {greaterThanOrEqual: 0}
+
+    product = new Product
+
+    it "errors when attribute missing", ->
+      product.price = -1
+
+      expect(product.isValid()).toBe(false)
+      expect(product.isInvalid()).toBe(true)
+      expect(product.errors).toEqual
+        price: ["must be greater than or equal to 0"]
+
+    it "is valid when attribute provided", ->
+      product.price = 0
+
+      expect(product.isValid()).toBe(true)
+      expect(product.isInvalid()).toBe(false)
+      expect(product.errors).toEqual []
+
+  describe "lessThanOrEqual", ->
+    class Product
+      Validity.define @,
+        price: {lessThanOrEqual: 1000}
+
+    product = new Product
+
+    it "errors when attribute missing", ->
+      product.price = 1001
+
+      expect(product.isValid()).toBe(false)
+      expect(product.isInvalid()).toBe(true)
+      expect(product.errors).toEqual
+        price: ["must be less than or equal to 1000"]
+
+    it "is valid when attribute provided", ->
+      product.price = 1000
+
+      expect(product.isValid()).toBe(true)
+      expect(product.isInvalid()).toBe(false)
+      expect(product.errors).toEqual []
+
   describe "lengthEquals", ->
     class Product
       Validity.define @,

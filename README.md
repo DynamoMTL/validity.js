@@ -40,7 +40,9 @@ person.errors #= {}
 
 - required
 - greater than
+- greater than or equal
 - less than
+- less than or equal
 - equal to
 - custom validators
 
@@ -48,5 +50,3 @@ person.errors #= {}
 
 - number
 - regex
-- greater than or equal
-- less than or equal

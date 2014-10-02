@@ -6,8 +6,14 @@ window.Validity =
     greaterThan: (object, attr, arg) ->
       "must be greater than #{arg}" unless Number(object[attr]) > arg
 
+    greaterThanOrEqual: (object, attr, arg) ->
+      "must be greater than or equal to #{arg}" unless Number(object[attr]) >= arg
+
     lessThan: (object, attr, arg) ->
       "must be less than #{arg}" unless Number(object[attr]) < arg
+
+    lessThanOrEqual: (object, attr, arg) ->
+      "must be less than or equal to #{arg}" unless Number(object[attr]) <= arg
 
     lengthEquals: (object, attr, arg) ->
       "must have exactly #{arg} characters" if String(object[attr]).length != arg

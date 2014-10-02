@@ -11,9 +11,19 @@
           return "must be greater than " + arg;
         }
       },
+      greaterThanOrEqual: function(object, attr, arg) {
+        if (!(Number(object[attr]) >= arg)) {
+          return "must be greater than or equal to " + arg;
+        }
+      },
       lessThan: function(object, attr, arg) {
         if (!(Number(object[attr]) < arg)) {
           return "must be less than " + arg;
+        }
+      },
+      lessThanOrEqual: function(object, attr, arg) {
+        if (!(Number(object[attr]) <= arg)) {
+          return "must be less than or equal to " + arg;
         }
       },
       lengthEquals: function(object, attr, arg) {
