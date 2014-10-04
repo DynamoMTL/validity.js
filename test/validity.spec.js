@@ -194,7 +194,7 @@
         return expect(product.errors).toEqual([]);
       });
     });
-    describe("lengthEquals", function() {
+    describe("length", function() {
       var Product, product;
       Product = (function() {
         function Product() {}
@@ -202,9 +202,15 @@
         Validity.define(Product, {
           name: [
             'required', {
-              lengthEquals: 10
+              length: 10
             }
-          ]
+          ],
+          sku: {
+            length: {
+              greaterThan: 5,
+              lessThan: 8
+            }
+          }
         });
 
         return Product;
@@ -215,11 +221,31 @@
         expect(product.isValid()).toBe(false);
         expect(product.isInvalid()).toBe(true);
         return expect(product.errors).toEqual({
-          name: ["can't be blank", "must have exactly 10 characters"]
+          name: ["can't be blank", "length must be 10"],
+          sku: ["length must be greater than 5"]
         });
       });
-      return it("is valid when attribute provided", function() {
+      it("errors when too long", function() {
+        product.sku = '01212121221';
+        expect(product.isValid()).toBe(false);
+        expect(product.isInvalid()).toBe(true);
+        return expect(product.errors).toEqual({
+          name: ["can't be blank", "length must be 10"],
+          sku: ["length must be less than 8"]
+        });
+      });
+      it("errors when too short", function() {
+        product.sku = '123';
+        expect(product.isValid()).toBe(false);
+        expect(product.isInvalid()).toBe(true);
+        return expect(product.errors).toEqual({
+          name: ["can't be blank", "length must be 10"],
+          sku: ["length must be greater than 5"]
+        });
+      });
+      return it("is valid when length is correct", function() {
         product.name = '1234567890';
+        product.sku = '1234567';
         expect(product.isValid()).toBe(true);
         expect(product.isInvalid()).toBe(false);
         return expect(product.errors).toEqual([]);

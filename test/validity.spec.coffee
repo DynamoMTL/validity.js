@@ -141,10 +141,11 @@ describe "Validity", ->
       expect(product.isInvalid()).toBe(false)
       expect(product.errors).toEqual []
 
-  describe "lengthEquals", ->
+  describe "length", ->
     class Product
       Validity.define @,
-        name: ['required', {lengthEquals: 10}]
+        name: ['required', {length: 10}]
+        sku: {length: {greaterThan: 5, lessThan: 8}}
 
     product = new Product
 
@@ -152,10 +153,30 @@ describe "Validity", ->
       expect(product.isValid()).toBe(false)
       expect(product.isInvalid()).toBe(true)
       expect(product.errors).toEqual
-        name: ["can't be blank", "must have exactly 10 characters"]
+        name: ["can't be blank", "length must be 10"]
+        sku: ["length must be greater than 5"]
 
-    it "is valid when attribute provided", ->
+    it "errors when too long", ->
+      product.sku = '01212121221'
+
+      expect(product.isValid()).toBe(false)
+      expect(product.isInvalid()).toBe(true)
+      expect(product.errors).toEqual
+        name: ["can't be blank", "length must be 10"]
+        sku: ["length must be less than 8"]
+
+    it "errors when too short", ->
+      product.sku = '123'
+
+      expect(product.isValid()).toBe(false)
+      expect(product.isInvalid()).toBe(true)
+      expect(product.errors).toEqual
+        name: ["can't be blank", "length must be 10"]
+        sku: ["length must be greater than 5"]
+
+    it "is valid when length is correct", ->
       product.name = '1234567890'
+      product.sku = '1234567'
 
       expect(product.isValid()).toBe(true)
       expect(product.isInvalid()).toBe(false)

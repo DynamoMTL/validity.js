@@ -26,9 +26,24 @@
           return "must be less than or equal to " + arg;
         }
       },
-      lengthEquals: function(object, attr, arg) {
-        if (String(object[attr]).length !== arg) {
-          return "must have exactly " + arg + " characters";
+      length: function(object, attr, arg) {
+        var length, value;
+        value = object[attr] || '';
+        if (typeof arg === 'number') {
+          if (value.length !== arg) {
+            return "length must be " + arg;
+          }
+        } else if (typeof arg === 'object') {
+          if (length = arg['greaterThan']) {
+            if (value.length < length) {
+              return "length must be greater than " + length;
+            }
+          }
+          if (length = arg['lessThan']) {
+            if (value.length > length) {
+              return "length must be less than " + length;
+            }
+          }
         }
       },
       number: function(object, attr) {

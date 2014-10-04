@@ -18,12 +18,12 @@ A validation framework for JavaScript models.
 class Person
   Validity.define @,
     name: 'required'
-    age: {greaterThan: 0}
-    zipcode: ['required', {lengthEquals: 5}]
+    age: ['number', {greaterThan: 0}]
+    zipcode: ['required', {length: 5}]
 
 person = new Person
 person.isValid() #= false
-person.errors #= {name: ["can't be blank"], age: ["must be greater than 0"], zipcode: ["can't be blank", "must have exactly 5 characters"]}
+person.errors #= {name: ["can't be blank"], age: ["must be a number", "must be greater than 0"], zipcode: ["can't be blank", "must have exactly 5 characters"]}
 
 person.name = 'John Smith'
 person.age = 47
@@ -46,7 +46,7 @@ bower install validity
 - greater than or equal
 - less than
 - less than or equal
-- equal to
+- length
 - custom validators
 
 ### Upcoming

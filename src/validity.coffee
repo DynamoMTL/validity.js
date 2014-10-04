@@ -15,8 +15,17 @@ window.Validity =
     lessThanOrEqual: (object, attr, arg) ->
       "must be less than or equal to #{arg}" unless Number(object[attr]) <= arg
 
-    lengthEquals: (object, attr, arg) ->
-      "must have exactly #{arg} characters" if String(object[attr]).length != arg
+    length: (object, attr, arg) ->
+      value = object[attr] || ''
+
+      if typeof(arg) == 'number'
+        "length must be #{arg}" if value.length != arg
+      else if typeof(arg) == 'object'
+        if length = arg['greaterThan']
+          return "length must be greater than #{length}" if value.length < length
+
+        if length = arg['lessThan']
+          return "length must be less than #{length}" if value.length > length
 
     number: (object, attr) ->
       "must be a number" unless typeof(object[attr]) == 'number'
