@@ -26,6 +26,11 @@
           return "must be less than or equal to " + arg;
         }
       },
+      regex: function(object, attr, arg) {
+        if (!String(object[attr]).match(arg)) {
+          return 'is invalid';
+        }
+      },
       length: function(object, attr, arg) {
         var length, value;
         value = object[attr] || '';

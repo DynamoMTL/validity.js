@@ -251,6 +251,43 @@
         return expect(product.errors).toEqual([]);
       });
     });
+    describe("regex", function() {
+      var Person, person;
+      Person = (function() {
+        function Person() {}
+
+        Validity.define(Person, {
+          email: {
+            regex: /.+\@.+\..+/
+          }
+        });
+
+        return Person;
+
+      })();
+      person = new Person;
+      it("errors when attribute missing", function() {
+        expect(person.isValid()).toBe(false);
+        expect(person.isInvalid()).toBe(true);
+        return expect(person.errors).toEqual({
+          email: ["is invalid"]
+        });
+      });
+      it("is invalid when regex doesnt match", function() {
+        person.email = 'billg';
+        expect(person.isValid()).toBe(false);
+        expect(person.isInvalid()).toBe(true);
+        return expect(person.errors).toEqual({
+          email: ["is invalid"]
+        });
+      });
+      return it("is valid when attribute provided", function() {
+        person.email = 'billg@microsoft.com';
+        expect(person.isValid()).toBe(true);
+        expect(person.isInvalid()).toBe(false);
+        return expect(person.errors).toEqual([]);
+      });
+    });
     return describe("custom validator", function() {
       var Product, product;
       Product = (function() {

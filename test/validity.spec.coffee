@@ -182,6 +182,34 @@ describe "Validity", ->
       expect(product.isInvalid()).toBe(false)
       expect(product.errors).toEqual []
 
+  describe "regex", ->
+    class Person
+      Validity.define @,
+        email: {regex: /.+\@.+\..+/}
+
+    person = new Person
+
+    it "errors when attribute missing", ->
+      expect(person.isValid()).toBe(false)
+      expect(person.isInvalid()).toBe(true)
+      expect(person.errors).toEqual
+        email: ["is invalid"]
+
+    it "is invalid when regex doesnt match", ->
+      person.email = 'billg'
+
+      expect(person.isValid()).toBe(false)
+      expect(person.isInvalid()).toBe(true)
+      expect(person.errors).toEqual
+        email: ["is invalid"]
+
+    it "is valid when attribute provided", ->
+      person.email = 'billg@microsoft.com'
+
+      expect(person.isValid()).toBe(true)
+      expect(person.isInvalid()).toBe(false)
+      expect(person.errors).toEqual []
+
   describe "custom validator", ->
     class Product
       Validity.define @,

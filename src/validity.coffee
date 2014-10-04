@@ -15,6 +15,9 @@ window.Validity =
     lessThanOrEqual: (object, attr, arg) ->
       "must be less than or equal to #{arg}" unless Number(object[attr]) <= arg
 
+    regex: (object, attr, arg) ->
+      'is invalid' unless String(object[attr]).match(arg)
+
     length: (object, attr, arg) ->
       value = object[attr] || ''
 

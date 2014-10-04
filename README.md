@@ -18,6 +18,7 @@ A validation framework for JavaScript models.
 class Person
   Validity.define @,
     name: 'required'
+    email: {regex: /.+\@.+\..+/}
     age: ['number', {greaterThan: 0}]
     zipcode: ['required', {length: 5}]
 
@@ -47,6 +48,7 @@ bower install validity
 - less than
 - less than or equal
 - length
+- regex
 - custom validators
 
 ### Upcoming
@@ -55,4 +57,3 @@ bower install validity
 - between
 - inclusion
 - exclusion
-- regex
