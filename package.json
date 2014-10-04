@@ -2,10 +2,10 @@
   "name": "validity",
   "version": "0.0.1",
   "description": "Easy validation for JavaScript models",
-  "author": "https://github.com/DynamoMTL/validity/graphs/contributors",
+  "author": "https://github.com/DynamoMTL/validity.js/graphs/contributors",
   "license": "MIT",
   "private": true,
-  "homepage": "https://github.com/DynamoMtl/validity",
+  "homepage": "https://github.com/DynamoMTL/validity.js",
   "main": "src/validity.js",
   "dependencies": {},
   "devDependencies": {
@@ -25,6 +25,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/DynamoMTL/validity.git"
+    "url": "git://github.com/DynamoMTL/validity.js.git"
   }
 }
