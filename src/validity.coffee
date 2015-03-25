@@ -1,42 +1,60 @@
 messages =
   required: "can't be blank"
+  greaterThan: "must be greater than %arg"
+  greaterThanOrEqual: "must be greater than or equal to %arg"
+  lessThan: "must be less than %arg"
+  lessThanOrEqual: "must be less than or equal to %arg"
+  regex: 'is invalid'
+  length: "length must be %length"
+  lengthGreaterThan: "length must be greater than %length"
+  lengthLessThan: "length must be less than %length"
+  number: "must be a number"
+
+formatMessage = (messageKey, args) ->
+  message = messages[messageKey]
+
+  for key, value of args
+    regex   = RegExp("%#{key}", "g")
+    message = message.replace(regex, value)
+
+  message
 
 window.Validity =
   MESSAGES: messages
 
   RULES:
     required: (object, attr) ->
-      messages.required unless object[attr]
+      formatMessage('required') unless object[attr]
 
     greaterThan: (object, attr, arg) ->
-      "must be greater than #{arg}" unless Number(object[attr]) > arg
+      formatMessage('greaterThan', arg: arg) unless Number(object[attr]) > arg
 
     greaterThanOrEqual: (object, attr, arg) ->
-      "must be greater than or equal to #{arg}" unless Number(object[attr]) >= arg
+      formatMessage('greaterThanOrEqual', arg: arg) unless Number(object[attr]) >= arg
 
     lessThan: (object, attr, arg) ->
-      "must be less than #{arg}" unless Number(object[attr]) < arg
+      formatMessage('lessThan', arg: arg) unless Number(object[attr]) < arg
 
     lessThanOrEqual: (object, attr, arg) ->
-      "must be less than or equal to #{arg}" unless Number(object[attr]) <= arg
+      formatMessage('lessThanOrEqual', arg: arg) unless Number(object[attr]) <= arg
 
     regex: (object, attr, arg) ->
-      'is invalid' unless String(object[attr]).match(arg)
+      formatMessage('regex') unless String(object[attr]).match(arg)
 
     length: (object, attr, arg) ->
       value = object[attr] || ''
 
       if typeof(arg) == 'number'
-        "length must be #{arg}" if value.length != arg
+        formatMessage('length', length: arg) if value.length != arg
       else if typeof(arg) == 'object'
         if length = arg['greaterThan']
-          return "length must be greater than #{length}" if value.length < length
+          return formatMessage('lengthGreaterThan', length: length) if value.length < length
 
         if length = arg['lessThan']
-          return "length must be less than #{length}" if value.length > length
+          return formatMessage('lengthLessThan', length: length) if value.length > length
 
     number: (object, attr) ->
-      "must be a number" unless typeof(object[attr]) == 'number'
+      formatMessage('number') unless typeof(object[attr]) == 'number'
 
   _normalizeRules: (rules) ->
     self = this
