@@ -1,9 +1,16 @@
 (function() {
+  var messages;
+
+  messages = {
+    required: "can't be blank"
+  };
+
   window.Validity = {
+    MESSAGES: messages,
     RULES: {
       required: function(object, attr) {
         if (!object[attr]) {
-          return "can't be blank";
+          return messages.required;
         }
       },
       greaterThan: function(object, attr, arg) {

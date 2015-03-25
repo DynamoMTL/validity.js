@@ -1,7 +1,12 @@
+messages =
+  required: "can't be blank"
+
 window.Validity =
+  MESSAGES: messages
+
   RULES:
     required: (object, attr) ->
-      "can't be blank" unless object[attr]
+      messages.required unless object[attr]
 
     greaterThan: (object, attr, arg) ->
       "must be greater than #{arg}" unless Number(object[attr]) > arg
