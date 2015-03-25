@@ -4,7 +4,7 @@
   "description": "Easy validation for JavaScript models",
   "author": "https://github.com/DynamoMTL/validity.js/graphs/contributors",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "homepage": "https://github.com/DynamoMTL/validity.js",
   "main": "src/validity.js",
   "dependencies": {},
