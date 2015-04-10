@@ -1,6 +1,6 @@
 {
   "name": "validity.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Easy validation for JavaScript models",
   "author": "https://github.com/DynamoMTL/validity.js/graphs/contributors",
   "license": "MIT",
