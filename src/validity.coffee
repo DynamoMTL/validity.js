@@ -24,37 +24,37 @@ window.Validity =
 
   RULES:
     required: (object, attr) ->
-      formatMessage('required') unless object[attr]
+      formatMessage('required', field: attr) unless object[attr]
 
     greaterThan: (object, attr, arg) ->
-      formatMessage('greaterThan', arg: arg) unless Number(object[attr]) > arg
+      formatMessage('greaterThan', field: attr, arg: arg) unless Number(object[attr]) > arg
 
     greaterThanOrEqual: (object, attr, arg) ->
-      formatMessage('greaterThanOrEqual', arg: arg) unless Number(object[attr]) >= arg
+      formatMessage('greaterThanOrEqual', field: attr, arg: arg) unless Number(object[attr]) >= arg
 
     lessThan: (object, attr, arg) ->
-      formatMessage('lessThan', arg: arg) unless Number(object[attr]) < arg
+      formatMessage('lessThan', field: attr, arg: arg) unless Number(object[attr]) < arg
 
     lessThanOrEqual: (object, attr, arg) ->
-      formatMessage('lessThanOrEqual', arg: arg) unless Number(object[attr]) <= arg
+      formatMessage('lessThanOrEqual', field: attr, arg: arg) unless Number(object[attr]) <= arg
 
     regex: (object, attr, arg) ->
-      formatMessage('regex') unless String(object[attr]).match(arg)
+      formatMessage('regex', field: attr) unless String(object[attr]).match(arg)
 
     length: (object, attr, arg) ->
       value = object[attr] || ''
 
       if typeof(arg) == 'number'
-        formatMessage('length', length: arg) if value.length != arg
+        formatMessage('length', field: attr, length: arg) if value.length != arg
       else if typeof(arg) == 'object'
         if length = arg['greaterThan']
-          return formatMessage('lengthGreaterThan', length: length) if value.length < length
+          return formatMessage('lengthGreaterThan', field: attr, length: length) if value.length < length
 
         if length = arg['lessThan']
-          return formatMessage('lengthLessThan', length: length) if value.length > length
+          return formatMessage('lengthLessThan', field: attr, length: length) if value.length > length
 
     number: (object, attr) ->
-      formatMessage('number') unless typeof(object[attr]) == 'number'
+      formatMessage('number', field: attr) unless typeof(object[attr]) == 'number'
 
   _normalizeRules: (rules) ->
     self = this
